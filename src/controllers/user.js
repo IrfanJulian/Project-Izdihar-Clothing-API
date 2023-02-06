@@ -26,7 +26,7 @@ exports.getData = async(req,res) =>{
 
 exports.insertData = async(req, res) =>{
     try {
-        const dataUser = await userModel.findByEmail(email)
+        const dataUser = await userModel.findByEmail(req.body.email)
         const digits = "0123456789";
         let otp = "";
         // eslint-disable-next-line no-plusplus
@@ -34,7 +34,7 @@ exports.insertData = async(req, res) =>{
           otp += digits[Math.floor(Math.random() * 10)];
         }
         const salt = bcrypt.genSaltSync(10);
-        const passwordHash = bcrypt.hashSync(password, salt);
+        const passwordHash = bcrypt.hashSync(req.body.password, salt);
         if(!dataUser.rowCount){
             let data = {
                 id: uuidv4(),
