@@ -17,8 +17,9 @@ const insertData = (data) =>{
     return pool.query(`INSERT INTO users(id, name, email, password, phone_number, role, otp)VALUES('${id}', '${name}', '${email}', '${password}', '${phone_number}', 'user', '${otp}')`)
 }
 
-const verify = (email) => {
-    return pool.query(`UPDATE users SET status_activation = 'actived' WHERE email = '${email}'`)
+const verify = (data) => {
+    const { email, otp } = data
+    return pool.query(`UPDATE users SET status_activation = 'actived', otp = '${otp}' WHERE email = '${email}'`)
 }
 
 const updateData = (id, data) =>{

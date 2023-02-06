@@ -61,17 +61,15 @@ exports.insertData = async(req, res) =>{
 }
 
 exports.verifyAccount = async(req,res) => {
-    const email = req.body.email
-    const otp = req.body.otp
+    const { email, otp } = req.body
     const {rows: [dataUser]} = await userModel.findByEmail(email)
-    const dataOtp = dataUser.otp
-    console.log(dataOtp);
+    const data = { email, otp }    
     if(dataUser === null){
         return commonHelper.response(res, null, 'error', 404, 'email or OTP wrong')
     }else{
         console.log('masuk');
-        if(otp === dataOtp){
-            await userModel.verify(email)
+        if(otp === dataUser.otp){
+            await userModel.verify(data)
             return commonHelper.response(res, null, 'sucess', 200, 'validation OTP sucess')
         }else{
             console.log('otp salah');
