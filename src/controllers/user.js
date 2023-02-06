@@ -60,15 +60,36 @@ exports.insertData = async(req, res) =>{
     }
 }
 
+exports.verifyAccount = async(req,res) => {
+    const email = req.body.email
+    const otp = req.body.otp
+    const {rows: [dataUser]} = await userModel.findByEmail(email)
+    const dataOtp = dataUser.otp
+    console.log(dataOtp);
+    if(dataUser === null){
+        return commonHelper.response(res, null, 'error', 404, 'email or OTP wrong')
+    }else{
+        console.log('masuk');
+        if(otp === dataOtp){
+            await userModel.verify(email)
+            return commonHelper.response(res, null, 'sucess', 200, 'validation OTP sucess')
+        }else{
+            console.log('otp salah');
+            return commonHelper.response(res, null, 'error', 401, 'wrong OTP!')
+        }
+    }
+}
+
 exports.login = async (req,res) => {
     const {email, password} = req.body
     const {rows: [dataUser]} = await userModel.findByEmail(email)
+    if(dataUser.status_activation == 'not_actived'){
+        return commonHelper.response(res, null, failed, 403, 'Your account is doesn`t actived' )
+    }
     if(!dataUser){
         return commonHelper.response(res, null, 'failed', 403, 'login failed! wrong email or password')
     }
-    // console.log(dataUser);
     const validationPassword = bcrypt.compareSync(password, dataUser.password)
-    // console.log(validationPassword);
     if(!validationPassword){
         return commonHelper.response(res, null, 'failed', 403, 'login failed! wrong email or password')
     }

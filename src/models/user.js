@@ -17,6 +17,10 @@ const insertData = (data) =>{
     return pool.query(`INSERT INTO users(id, name, email, password, phone_number, role, otp)VALUES('${id}', '${name}', '${email}', '${password}', '${phone_number}', 'user', '${otp}')`)
 }
 
+const verify = (email) => {
+    return pool.query(`UPDATE users SET status_activation = 'actived' WHERE email = '${email}'`)
+}
+
 const updateData = (id, data) =>{
     const { name, email, birth, phone_number, photo, store_description, store_name } = data
     return pool.query(`UPDATE users SET name='${name}', email='${email}', birth='${birth}', phone_number='${phone_number}', photo='${photo}', store_description='${store_description}', store_name='${store_name}' WHERE id='${id}'`)
@@ -35,6 +39,7 @@ module.exports = {
     getData,
     insertData,
     updateData,
+    verify,
     updateContact,
     deleteData,
     findByEmail,
