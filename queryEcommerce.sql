@@ -9,3 +9,7 @@ CREATE TABLE product(id SERIAL PRIMARY KEY, name TEXT, id_seller TEXT, descripti
 CREATE TABLE transaction(id SERIAL PRIMARY KEY, id_customer TEXT, id_seller TEXT, id_product INTEGER, qty INTEGER, total_price INTEGER);
 
 CREATE TABLE users(id TEXT PRIMARY KEY, name TEXT, email TEXT, password TEXT, phone_number TEXT, role TEXT, birth TEXT DEFAULT '', photo TEXT DEFAULT '', store_description TEXT DEFAULT '', store_name TEXT DEFAULT '', address TEXT DEFAULT '', zip TEXT DEFAULT '', city TEXT DEFAULT '', recipient_name TEXT DEFAULT '', recipient_phone TEXT DEFAULT '');
+
+CREATE TABLE bag(id SERIAL PRIMARY KEY, id_user TEXT, id_product INTEGER, qty INTEGER, total_price INTEGER);
+
+INSERT INTO bag(id_user, id_product, qty, total_price)VALUES('d68ed00b-638d-4195-b5e1-6f632d57aa3c', 1, 2, 180000);

@@ -1,15 +1,25 @@
 const pool = require('../configs/db')
 
-const getDataBag = () => {
-    return pool.query(`SELECT mybag.*, products.name, products.brand, products.price, contact.recipients_name, contact.address, contact.zip, contact.city_subditrict, contact`);
+const getDataBag = (id) => {
+    return pool.query(`SELECT bag.id, bag.qty, bag.total_price, product.name, product.price, product.brand, product.photo FROM bag RIGHT JOIN product ON product.id = bag.id_product WHERE bag.id_user = '${id}'`);
+}
+
+const findbyId = (id) => {
+    return pool.query(`SELECT * FROM bag WHERE id = ${id}`)
 }
 
 const insertDataBag = (data) => {
-    const { id_user, id_product, qty, total } = data
-    return pool.query(`INSERT INTO mybag(id_user, id_product, qty, total)VALUES('${id_user}', ${id_product}, ${qty}, ${total})`)
+    const { id_user, id_product, qty, total_price } = data
+    return pool.query(`INSERT INTO bag(id_user, id_product, qty, total_price)VALUES('${id_user}', ${id_product}, ${qty}, ${total_price})`)
+}
+
+const deleteData = (id) =>{
+    return pool.query(`DELETE FROM bag WHERE id='${id}'`)
 }
 
 module.exports = {
     getDataBag,
-    insertDataBag
+    insertDataBag,
+    deleteData,
+    findbyId
 }

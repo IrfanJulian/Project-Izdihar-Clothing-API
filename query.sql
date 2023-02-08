@@ -101,3 +101,5 @@ SELECT checkout.*, product.name, product.price, product.photo, product.brand, us
 SELECT checkout.*, product.name AS product_name, product.photo, product.brand, product.price, users.name, users.address, users.zip, users.city, users.phone_number, transaction.total_price FROM checkout INNER JOIN product ON product.id = checkout.id_product INNER JOIN users ON users.id = checkout.id_user INNER JOIN transaction ON transaction.id = checkout.id_transaction WHERE checkout.id_seller = '9f9158f2-67ec-4f0d-8f8e-41e676e86545';
 
 SELECT checkout.*, product.name, product.price, product.brand, product.photo FROM checkout INNER JOIN product ON product.id = checkout.id_product WHERE checkout.id_user = 
+
+SELECT bag.id, bag.qty, bag.total_price, product.name, product.price, product.brand, product.photo FROM bag RIGHT JOIN product ON product.id = bag.id_product WHERE bag.id_user = 
