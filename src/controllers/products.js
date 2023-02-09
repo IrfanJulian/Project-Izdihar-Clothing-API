@@ -43,7 +43,7 @@ cloudinary.config({
       try {
         const id = req.params.id || ''
         const {rows} = await productModel.getDetailProduct(id)
-        console.log(rows);
+        // console.log(rows);
         // client.setEx(`products/${req.params.id}`,60*60,JSON.stringify(rows))
         commonHelper.response(res, rows, 'success', 200, 'Get Detail Data Success')
       } catch (error) {
