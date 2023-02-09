@@ -11,8 +11,8 @@ exports.insertBag = async (req,res) => {
     const { id_user, id_product, qty, total_price } = req.body
     const data = { id_user, id_product, qty, total_price }
     try {
-        const { rows } = await bagModel.insertDataBag(data);
-        response(res, rows, 'sucess', 200, 'insert data sucess');
+        await bagModel.insertDataBag(data);
+        response(res, null, 'sucess', 200, 'insert data sucess');
     } catch (error) {
         console.log(error);
         response(res, error, 'failed', 400, 'insert data failed' );
